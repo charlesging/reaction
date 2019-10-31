@@ -7,7 +7,7 @@ class List extends Component {
     cardFormOpen: false
   };
 
-  handleAddCard = e => {
+  handleFormToggle = e => {
     this.setState(prevState => ({
       cardFormOpen: !prevState.cardFormOpen
     }));
@@ -40,9 +40,11 @@ class List extends Component {
               </div>
             </div>
             <CardsContainer list={this.props.list} />
-            {this.state.cardFormOpen ? <ToggleableCardForm /> : null}
+            {this.state.cardFormOpen ? (
+              <ToggleableCardForm onFormToggle={this.handleFormToggle} />
+            ) : null}
             <div
-              onClick={this.handleAddCard}
+              onClick={this.handleFormToggle}
               className="add-card-toggle"
               data-position="bottom"
             >
