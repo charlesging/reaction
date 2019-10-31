@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CardsContainer from "./CardsContainer";
+import ToggleableCardForm from "./ToggleableCardForm";
 
 class List extends Component {
   state = {
@@ -7,15 +8,16 @@ class List extends Component {
   };
 
   handleAddCard = e => {
-    this.setState(prevState => {
-      this.state.cardFormOpen = !prevState.cardFormOpen;
-    });
+    this.setState(prevState => ({
+      cardFormOpen: !prevState.cardFormOpen
+    }));
   };
 
   render() {
     const divClass = this.state.cardFormOpen
       ? "list-wrapper add-dropdown-active"
       : "list-wrapper";
+
     return (
       <div className={divClass}>
         <div className="list-background">
@@ -38,19 +40,12 @@ class List extends Component {
               </div>
             </div>
             <CardsContainer list={this.props.list} />
-            <div className="add-dropdown add-bottom">
-              <div className="card">
-                <div className="card-info"></div>
-                <textarea name="add-card"></textarea>
-                <div className="members"></div>
-              </div>
-              <a className="button">Add</a>
-              <i className="x-icon icon"></i>
-              <div className="add-options">
-                <span>...</span>
-              </div>
-            </div>
-            <div className="add-card-toggle" data-position="bottom">
+            {this.state.cardFormOpen ? <ToggleableCardForm /> : null}
+            <div
+              onClick={this.handleAddCard}
+              className="add-card-toggle"
+              data-position="bottom"
+            >
               Add a card...
             </div>
           </div>
