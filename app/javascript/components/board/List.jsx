@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CardsContainer from "./CardsContainer";
-import ToggleableCardForm from "./ToggleableCardForm";
+import ToggleableCardFormContainer from "./ToggleableCardFormContainer";
 
 class List extends Component {
   state = {
@@ -41,7 +41,10 @@ class List extends Component {
             </div>
             <CardsContainer list={this.props.list} />
             {this.state.cardFormOpen ? (
-              <ToggleableCardForm onFormToggle={this.handleFormToggle} />
+              <ToggleableCardFormContainer
+                onFormToggle={this.handleFormToggle}
+                list={this.props.list}
+              />
             ) : null}
             <div
               onClick={this.handleFormToggle}
