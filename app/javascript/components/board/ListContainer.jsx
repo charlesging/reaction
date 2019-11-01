@@ -22,7 +22,7 @@ class ListContainer extends Component {
         <div id="existing-lists" className="existing-lists">
           {lists}
         </div>
-        <AddListContainer />
+        <AddListContainer boardId={this.props.boardId} />
       </div>
     );
   }

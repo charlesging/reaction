@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 class AddListForm extends Component {
   state = {
-    title: ""
+    title: "",
+    listFormOpen: false
   };
 
   handleTitleChange = e => {
@@ -10,18 +11,40 @@ class AddListForm extends Component {
     this.setState({ title: newValue });
   };
 
+  handleFormToggle = e => {
+    this.setState(prevState => ({
+      listFormOpen: !prevState.listFormOpen
+    }));
+  };
+
+  handleFormSubmit = () => {
+    console.log(this.state.title);
+    this.props.onSubmit(this.state.title, () => {
+      this.setState({ title: "" });
+      this.handleFormToggle();
+    });
+  };
+
   render() {
     return (
-      <div id="new-list" className="new-list selected">
-        <span>Add a list...</span>
+      <div
+        id="new-list"
+        className={`new-list${this.state.listFormOpen ? " selected" : ""}`}
+      >
+        <span onClick={this.handleFormToggle}>Add a list...</span>
         <input
           onChange={this.handleTitleChange}
           type="text"
           placeholder="Add a list..."
         />
         <div>
-          <input type="submit" className="button" value="Save" />
-          <i className="x-icon icon"></i>
+          <input
+            onClick={this.handleFormSubmit}
+            type="submit"
+            className="button"
+            value="Save"
+          />
+          <i onClick={this.handleFormToggle} className="x-icon icon"></i>
         </div>
       </div>
     );
