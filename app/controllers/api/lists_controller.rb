@@ -1,8 +1,5 @@
-# require 'pry'
 class Api::ListsController < ApplicationController
-
   def create
-    # binding.pry
     board = Board.find(params[:board_id])
     @list = List.new(list_params.merge(board: board))
 
