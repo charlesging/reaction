@@ -39,11 +39,21 @@ const apiClient = {
       .then(unwrapData)
       .then(callback)
       .catch(logError);
+  },
+  createList: function(list, boardId, callback) {
+    return axios
+      .post(routes.CREATE_LIST_URL, { list, board_id: boardId })
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+  createCard: function(card, listId, callback) {
+    return axios
+      .post(routes.CREATE_CARD_URL, { card, list_id: listId })
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
   }
-  // createList: function(list, boardId, callback) {
-  //   return axios
-  //   .post("/api/lists", {list: list, board_id: boardId})
-  // }
 };
 
 export default apiClient;

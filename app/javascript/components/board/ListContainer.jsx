@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import List from "./List";
+import AddListContainer from "./AddListContainer";
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -21,7 +22,7 @@ class ListContainer extends Component {
         <div id="existing-lists" className="existing-lists">
           {lists}
         </div>
-        <AddListContainer />
+        <AddListContainer boardId={this.props.boardId} />
       </div>
     );
   }

@@ -1,11 +1,11 @@
-import AddListForm from "./AddListForm";
 import { connect } from "react-redux";
-import { createList } from "../../actions/ListActions";
+import { createCard } from "../../actions/CardActions";
+import ToggleableCardForm from "./ToggleableCardForm";
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onSubmit: (title, callback) => {
-      dispatch(createList({ title: title }, ownProps.boardId, callback));
+      dispatch(createCard({ title: title }, ownProps.list.id, callback));
     }
   };
 };
@@ -13,4 +13,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   null,
   mapDispatchToProps
-)(AddListForm);
+)(ToggleableCardForm);

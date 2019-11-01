@@ -1,8 +1,7 @@
 class Api::ListsController < ApplicationController
-
   def create
     board = Board.find(params[:board_id])
-    @list = List.new(list_params.merge(board: board))
+    @list = List.new(list_params.merge(board: board)) # equivalent to {board_id: board.id}
 
     if @list.save
       # render create
@@ -20,6 +19,6 @@ class Api::ListsController < ApplicationController
   private 
 
   def list_params
-    params.require(:list).permit(:title)
+    params.require(:list).permit(:title) 
   end
 end
