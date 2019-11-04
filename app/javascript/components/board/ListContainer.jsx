@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import List from "./List";
-import AddListContainer from "./AddListContainer";
+import List from "../list/List";
+import AddListContainer from "../board/AddListContainer";
 import { updateList } from "../../actions/ListActions";
 
 const mapStateToProps = (state, ownProps) => {

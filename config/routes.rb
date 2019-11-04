@@ -20,4 +20,5 @@ Rails.application.routes.draw do
   get '/ui', to: 'ui#index'
 
   get '/boards/:id', to: 'home#index'
+  get '/cards/:id', to: 'home#index'
 end

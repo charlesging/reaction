@@ -7,6 +7,7 @@ import TopNav from "./shared/TopNav";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
 
 import { fetchBoards } from "../actions/BoardActions";
+import CardModalContainer from "./card/CardModalContainer";
 
 class Application extends React.Component {
   static contextTypes = {
@@ -30,6 +31,7 @@ class Application extends React.Component {
         <TopNav />
         <Route path="/" exact component={BoardsDashboardContainer} />
         <Route path="/boards/:id" component={BoardContainer} />
+        <Route path="/cards/:id" component={CardModalContainer} />
       </div>
     );
   }
