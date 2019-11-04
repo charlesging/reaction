@@ -33,6 +33,14 @@ class Api::CardsController < ApplicationController
 
   end
 
+  def show
+    @card = Card.find(params[:id])
+    
+    rescue ActiveRecord::RecordNotFound
+      @error = "Invalid card id provided"
+      render 'api/shared/error', status: 404
+  end
+
   private 
 
   def card_params
