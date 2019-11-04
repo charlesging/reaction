@@ -21,3 +21,20 @@ export function createList(list, boardId, callback) {
     });
   };
 }
+
+export function updateList(listId, data, callback) {
+  return function(dispatch) {
+    dispatch(updateListRequest());
+    apiClient.updateList(listId, data, updatedlist => {
+      dispatch(updateListSuccess(updatedlist));
+
+      if (callback) {
+        callback(updatedlist);
+      }
+    });
+  };
+}
+
+export function updateListRequest() {
+  return { type: types.UPDATE_LIST_REQUEST };
+}

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import List from "./List";
-import AddListContainer from "./AddListContainer";
+import List from "../list/List";
+import AddListContainer from "../board/AddListContainer";
+import { updateList } from "../../actions/ListActions";
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -11,10 +12,24 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    handleTitleChange: (listId, newTitle) => {
+      dispatch(updateList(listId, { title: newTitle }));
+    }
+  };
+};
+
 class ListContainer extends Component {
   render() {
     const lists = this.props.lists.map(list => {
-      return <List key={list.id} list={list} />;
+      return (
+        <List
+          key={list.id}
+          list={list}
+          onSubmit={this.props.handleTitleChange}
+        />
+      );
     });
 
     return (
@@ -30,5 +45,5 @@ class ListContainer extends Component {
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(ListContainer);

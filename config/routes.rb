@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :boards, only: [:index, :create, :show]
-    resources :lists, only: [:create]
-    resources :cards, only: [:create]
+    resources :lists, only: [:create, :update]
+    resources :cards, only: [:create, :update, :show]
   end
 
   get '/ui/all_boards', to: 'ui#all_boards'
@@ -20,4 +20,5 @@ Rails.application.routes.draw do
   get '/ui', to: 'ui#index'
 
   get '/boards/:id', to: 'home#index'
+  get '/cards/:id', to: 'home#index'
 end
