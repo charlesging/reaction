@@ -1,8 +1,13 @@
 import React, { Component } from "react";
+import Label from "./Label";
 
 class CardModal extends Component {
   state = {};
+
   render() {
+    const card = this.props.card;
+    const labels = card.labels.map(label => <Label color={label} />);
+
     return (
       <div id="modal-container">
         <div className="screen"></div>
@@ -11,8 +16,7 @@ class CardModal extends Component {
           <header>
             <i className="card-icon icon .close-modal"></i>
             <textarea className="list-title" style={{ height: "45px" }}>
-              Cards do many cool things. Click on this card to open it and learn
-              more...
+              {card.title}
             </textarea>
             <p>
               in list <a className="link">Stuff to try (this is a list)</a>
@@ -25,24 +29,7 @@ class CardModal extends Component {
                 <ul className="modal-details-list">
                   <li className="labels-section">
                     <h3>Labels</h3>
-                    <div className="member-container">
-                      <div className="green label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="yellow label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="orange label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="blue label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="purple label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="red label colorblindable"></div>
-                    </div>
+                    {labels}
                     <div className="member-container">
                       <i className="plus-icon sm-icon"></i>
                     </div>
@@ -56,19 +43,16 @@ class CardModal extends Component {
                         className="checkbox"
                         checked=""
                       />
-                      Aug 4 at 10:42 AM <span>(past due)</span>
+                      {card.due_date} <span>(past due)</span>
                     </div>
                   </li>
                 </ul>
                 <form className="description">
-                  <p>Description</p>
+                  <p>Description:</p>
                   <span id="description-edit" className="link">
                     Edit
                   </span>
-                  <p className="textarea-overlay">
-                    Cards have a symbol to indicate if they contain a
-                    description.
-                  </p>
+                  <p className="textarea-overlay">{card.description}</p>
                   <p id="description-edit-options" className="hidden">
                     You have unsaved edits on this field.{" "}
                     <span className="link">View edits</span> -{" "}
