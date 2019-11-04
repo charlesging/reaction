@@ -4,13 +4,22 @@ import ToggleableCardFormContainer from "./ToggleableCardFormContainer";
 
 class List extends Component {
   state = {
-    cardFormOpen: false
+    cardFormOpen: false,
+    title: this.props.list.title
   };
 
   handleFormToggle = e => {
     this.setState(prevState => ({
       cardFormOpen: !prevState.cardFormOpen
     }));
+  };
+
+  handleTitleChange = e => {
+    this.setState({ title: e.target.value });
+  };
+
+  handleSubmit = e => {
+    this.props.onSubmit(this.props.list.id, this.state.title);
   };
 
   render() {
@@ -27,7 +36,9 @@ class List extends Component {
               <input
                 type="text"
                 className="list-title"
-                value={this.props.list.title}
+                value={this.state.title}
+                onChange={this.handleTitleChange}
+                onBlur={this.handleSubmit}
                 autofocus="true"
               />
             </div>
