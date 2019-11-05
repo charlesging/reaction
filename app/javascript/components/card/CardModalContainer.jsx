@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import CardModal from "./CardModal";
 import BoardContainer from "../board/BoardContainer";
+import { fetchCard } from "../../actions/cardActions";
 
 const mapStateToProps = (state, ownProps) => {
   const currentCardModal = state.cards.find(card => {
@@ -10,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     card: currentCardModal
+    // list: (need list title inside card modal)
   };
 };
 
@@ -32,7 +34,7 @@ class CardModalContainer extends Component {
     if (this.props.card) {
       return <CardModal card={this.props.card} />;
     } else {
-      return <h1>No Card Found</h1>;
+      return null;
     }
   }
 }

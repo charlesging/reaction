@@ -5,7 +5,8 @@ import { fetchBoard } from "../../actions/BoardActions";
 
 const mapStateToProps = (state, ownProps) => {
   let currentBoard;
-
+  // if NOTHING in state, and we're not at /boards/,
+  // board is `null`
   if (/cards/g.test(ownProps.match.url)) {
     const currentCard = state.cards.find(card => {
       return card.id === +ownProps.match.params.id;
