@@ -7,48 +7,66 @@ const mapStateToProps = (state, ownProps) => {
   let currentBoard;
   // if NOTHING in state, and we're not at /boards/,
   // board is `null`
+
+  //   currentBoard = state.boards.find(board => {
+  //     return board.id === currentCard.board_id;
+  //   });
+  // } else {
+  // currentBoard = state.boards.find(board => {
+  //   return board.id === +ownProps.match.params.id;
+  // });
+  // }
+
+  // return {
+  //   board: currentBoard
+  // };
+  return { state };
+};
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  let boardId;
   if (/cards/g.test(ownProps.match.url)) {
-    const currentCard = state.cards.find(card => {
+    const currentCard = stateProps.state.cards.find(card => {
       return card.id === +ownProps.match.params.id;
     });
-
-    currentBoard = state.boards.find(board => {
-      return board.id === currentCard.board_id;
-    });
+    if (currentCard) {
+      boardId = currentCard.board_id;
+    } else {
+      boardId = null;
+    }
   } else {
-    currentBoard = state.boards.find(board => {
-      return board.id === +ownProps.match.params.id;
-    });
+    boardId = +ownProps.match.params.id;
   }
 
-  return {
-    board: currentBoard
-  };
+  if (!boardId) {
+    return {
+      board: null
+    };
+  } else {
+    return {
+      board: stateProps.state.boards.find(board => {
+        // console.log("BOARD : ", board);
+        console.log("BOARD ID : ", board.id === boardId);
+        return board.id === boardId;
+      }),
+      onFetchBoard: () => {
+        dispatchProps.dispatch(fetchBoard(boardId));
+      }
+    };
+  }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onFetchBoard: () => {
-      dispatch(fetchBoard(+ownProps.match.params.id));
-    }
+    // onFetchBoard: () => {
+    //   dispatch(fetchBoard(+ownProps.match.params.id));
+    // }
+    dispatch: dispatch
   };
 };
 
-class BoardContainer extends React.Component {
-  componentDidMount() {
-    this.props.onFetchBoard();
-  }
-
-  render() {
-    if (this.props.board) {
-      return <Board board={this.props.board} />;
-    } else {
-      return <h1>No board found</h1>;
-    }
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(BoardContainer);
+  mapDispatchToProps,
+  mergeProps
+)(Board);
