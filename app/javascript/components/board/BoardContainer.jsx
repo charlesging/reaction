@@ -4,9 +4,21 @@ import Board from "./Board";
 import { fetchBoard } from "../../actions/BoardActions";
 
 const mapStateToProps = (state, ownProps) => {
-  const currentBoard = state.boards.find(board => {
-    return board.id === +ownProps.match.params.id;
-  });
+  let currentBoard;
+
+  if (/cards/g.test(ownProps.match.url)) {
+    const currentCard = state.cards.find(card => {
+      return card.id === +ownProps.match.params.id;
+    });
+
+    currentBoard = state.boards.find(board => {
+      return board.id === currentCard.board_id;
+    });
+  } else {
+    currentBoard = state.boards.find(board => {
+      return board.id === +ownProps.match.params.id;
+    });
+  }
 
   return {
     board: currentBoard
