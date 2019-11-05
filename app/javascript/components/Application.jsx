@@ -30,7 +30,7 @@ class Application extends React.Component {
       <div>
         <TopNav />
         <Route path="/" exact component={BoardsDashboardContainer} />
-        <Route path="/boards/:id" component={BoardContainer} />
+        <Route path="/(boards|cards)/:id " component={BoardContainer} />
         <Route path="/cards/:id" component={CardModalContainer} />
       </div>
     );
