@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import CardModal from "./CardModal";
+import BoardContainer from "../board/BoardContainer";
 
 const mapStateToProps = (state, ownProps) => {
   const currentCardModal = state.cards.find(card => {
