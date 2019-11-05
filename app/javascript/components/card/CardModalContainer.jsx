@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import CardModal from "./CardModal";
 import BoardContainer from "../board/BoardContainer";
-import { fetchCard } from "../../actions/cardActions";
+import { fetchCard, updateCard } from "../../actions/cardActions";
 
 const mapStateToProps = (state, ownProps) => {
   const currentCardModal = state.cards.find(card => {
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onFetchCard: () => {
       dispatch(fetchCard(+ownProps.match.params.id));
+    },
+    handleEditCard: (id, data, callback) => {
+      dispatch(updateCard(id, data, callback));
     }
   };
 };
@@ -32,7 +35,12 @@ class CardModalContainer extends Component {
 
   render() {
     if (this.props.card) {
-      return <CardModal card={this.props.card} />;
+      return (
+        <CardModal
+          card={this.props.card}
+          onSubmit={this.props.handleEditCard}
+        />
+      );
     } else {
       return null;
     }

@@ -67,6 +67,13 @@ const apiClient = {
       .then(unwrapData)
       .then(callback)
       .catch(logError);
+  },
+  updateCard: function(id, data, callback) {
+    return axios
+      .put(routes.updateCardUrl(id))
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
   }
 };
 

@@ -2,7 +2,25 @@ import React, { Component } from "react";
 import Label from "./Label";
 
 class CardModal extends Component {
-  state = {};
+  state = {
+    title: this.props.card.title
+  };
+
+  handleTitleChange = e => {
+    const newValue = e.target.value;
+    this.setState({
+      title: newValue
+    });
+  };
+
+  handleSubmit = e => {
+    const cardId = this.props.card.id;
+    const field = e.target.name;
+    const value = this.state[field];
+    this.props.onSubmit(cardId, { [field]: value }, () => {
+      // clean up???
+    });
+  };
 
   render() {
     const card = this.props.card;
@@ -15,9 +33,14 @@ class CardModal extends Component {
           <i className="x-icon icon close-modal"></i>
           <header>
             <i className="card-icon icon .close-modal"></i>
-            <textarea className="list-title" style={{ height: "45px" }}>
-              {card.title}
-            </textarea>
+            <textarea
+              name="title"
+              onBlur={this.handleSubmit}
+              onChange={this.handleTitleChange}
+              value={this.state.title}
+              className="list-title"
+              style={{ height: "45px" }}
+            ></textarea>
             <p>
               in list <a className="link">Stuff to try (this is a list)</a>
               <i className="sub-icon sm-icon"></i>
