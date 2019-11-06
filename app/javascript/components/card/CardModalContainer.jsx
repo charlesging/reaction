@@ -15,19 +15,18 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const cardId = +ownProps.match.params.id;
   return {
     onFetchCard: () => {
-      dispatch(fetchCard(+ownProps.match.params.id));
+      dispatch(fetchCard(cardId));
     },
-    handleEditCard: (id, data, callback) => {
-      dispatch(updateCard(id, data, callback));
+    onUpdateCard: (data, callback) => {
+      dispatch(updateCard(cardId, data, callback));
     }
   };
 };
 
 class CardModalContainer extends Component {
-  state = {};
-
   componentDidMount() {
     this.props.onFetchCard();
   }
@@ -35,10 +34,7 @@ class CardModalContainer extends Component {
   render() {
     if (this.props.card) {
       return (
-        <CardModal
-          card={this.props.card}
-          onSubmit={this.props.handleEditCard}
-        />
+        <CardModal card={this.props.card} onSubmit={this.props.onUpdateCard} />
       );
     } else {
       return null;

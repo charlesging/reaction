@@ -14,15 +14,6 @@ class CardModal extends Component {
     });
   };
 
-  handleSubmit = e => {
-    const cardId = this.props.card.id;
-    const field = e.target.name;
-    const value = this.state[field];
-    this.props.onSubmit(cardId, { [field]: value }, () => {
-      // clean up???
-    });
-  };
-
   render() {
     const card = this.props.card;
     const labels = card.labels.map(label => (
@@ -38,6 +29,7 @@ class CardModal extends Component {
             <i className="card-icon icon .close-modal"></i>
             <textarea
               name="title"
+              onBlur={e => props.onSubmit({ title: e.target.value })}
               onBlur={this.handleSubmit}
               onChange={this.handleTitleChange}
               value={this.state.title}
@@ -73,7 +65,11 @@ class CardModal extends Component {
                     </div>
                   </li>
                 </ul>
-                <CardDescriptionContainer description={card.description} />
+                <CardDescriptionContainer
+                  cardId={card.id}
+                  description={card.description}
+                  onSubmit={this.props.onSubmit}
+                />
               </li>
               <li className="comment-section">
                 <h2 className="comment-icon icon">Add Comment</h2>

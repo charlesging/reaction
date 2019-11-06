@@ -4,25 +4,31 @@ const CardDescription = props => {
   return (
     <form className="description">
       <p>Description</p>
-      {props.descriptionFormVisible ? (
+      {props.formVisible ? (
         <React.Fragment>
-          <textarea className="textarea-toggle" rows="1" autofocus>
-            Cards have a symbol to indicate if they contain a description.
-          </textarea>
+          <textarea
+            onChange={props.onChange}
+            className="textarea-toggle"
+            rows="1"
+            autoFocus
+            value={props.description}
+          ></textarea>
           <div>
-            <div className="button" value="Save">
+            <div
+              className="button"
+              value="Save"
+              name="description"
+              onClick={props.onSubmit}
+            >
               Save
             </div>
-            <i
-              onClick={props.onToggleDescriptionForm}
-              className="x-icon icon"
-            ></i>
+            <i onClick={props.onCloseForm} className="x-icon icon"></i>
           </div>
         </React.Fragment>
       ) : (
         <React.Fragment>
           <span
-            onClick={props.onToggleDescriptionForm}
+            onClick={props.onToggleForm}
             id="description-edit"
             className="link"
           >

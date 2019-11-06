@@ -18,6 +18,15 @@ export default function cardsReducer(state = [], action) {
     return state.concat(action.card);
   } else if (action.type === "FETCH_CARD_SUCCESS") {
     return state.concat(action.card);
+  } else if (action.type === "UPDATE_CARD_SUCCESS") {
+    const filteredCards = state.map(card => {
+      if (card.id === action.card.id) {
+        return Object.assign({}, card, action.card);
+      } else {
+        return card;
+      }
+    });
+    return filteredCards;
   } else {
     return state;
   }
