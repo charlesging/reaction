@@ -39,7 +39,7 @@ class List extends Component {
                 value={this.state.title}
                 onChange={this.handleTitleChange}
                 onBlur={this.handleSubmit}
-                autofocus="true"
+                autoFocus="true"
               />
             </div>
             <div className="add-dropdown add-top">
