@@ -22,6 +22,14 @@ export function createList(list, boardId, callback) {
   };
 }
 
+export function updateListSuccess(list) {
+  return { type: types.UPDATE_LIST_SUCCESS, list: list };
+}
+
+export function updateListRequest() {
+  return { type: types.UPDATE_LIST_REQUEST };
+}
+
 export function updateList(listId, data, callback) {
   return function(dispatch) {
     dispatch(updateListRequest());
@@ -33,8 +41,4 @@ export function updateList(listId, data, callback) {
       }
     });
   };
-}
-
-export function updateListRequest() {
-  return { type: types.UPDATE_LIST_REQUEST };
 }

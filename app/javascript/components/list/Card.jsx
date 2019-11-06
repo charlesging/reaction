@@ -13,6 +13,12 @@ class Card extends Component {
             <i className="edit-toggle edit-icon sm-icon"></i>
             <div className="cover-image"></div>
             <div className="card-info">
+              {card.labels.map(label => (
+                <div
+                  key={label}
+                  className={`card-label ${label} colorblindable`}
+                ></div>
+              ))}
               <p>{card.title}</p>
             </div>
             <div className="card-icons">

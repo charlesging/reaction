@@ -3,39 +3,71 @@ import { connect } from "react-redux";
 import Board from "./Board";
 import { fetchBoard } from "../../actions/BoardActions";
 
-const mapStateToProps = (state, ownProps) => {
-  const currentBoard = state.boards.find(board => {
-    return board.id === +ownProps.match.params.id;
-  });
+const mapStateToProps = state => {
+  return { state };
+};
 
+const mapDispatchToProps = dispatch => {
   return {
-    board: currentBoard
+    dispatch: dispatch
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onFetchBoard: () => {
-      dispatch(fetchBoard(+ownProps.match.params.id));
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  let boardId;
+  if (/cards/g.test(ownProps.match.url)) {
+    const currentCard = stateProps.state.cards.find(card => {
+      return card.id === +ownProps.match.params.id;
+    });
+    if (currentCard) {
+      boardId = currentCard.board_id;
+    } else {
+      boardId = null;
     }
-  };
+  } else {
+    boardId = +ownProps.match.params.id;
+  }
+
+  if (!boardId) {
+    return {
+      board: null
+    };
+  } else {
+    return {
+      board: stateProps.state.boards.find(board => {
+        return board.id === boardId;
+      }),
+      onFetchBoard: () => {
+        dispatchProps.dispatch(fetchBoard(boardId));
+      }
+    };
+  }
 };
 
 class BoardContainer extends React.Component {
+  state = {
+    requestSent: false
+  };
   componentDidMount() {
-    this.props.onFetchBoard();
+    if (this.props.onFetchBoard) {
+      this.props.onFetchBoard();
+      this.setState({ requestSent: true });
+    }
   }
 
-  render() {
-    if (this.props.board) {
-      return <Board board={this.props.board} />;
-    } else {
-      return <h1>No board found</h1>;
+  componentDidUpdate() {
+    if (!this.state.requestSent) {
+      this.props.onFetchBoard();
+      this.setState({ requestSent: true });
     }
+  }
+  render() {
+    return <Board board={this.props.board} />;
   }
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(BoardContainer);

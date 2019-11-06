@@ -1,12 +1,24 @@
 import React, { Component } from "react";
 import Label from "./Label";
+import CardDescriptionContainer from "./CardDescriptionContainer";
 
 class CardModal extends Component {
-  state = {};
+  state = {
+    title: this.props.card.title
+  };
+
+  handleTitleChange = e => {
+    const newValue = e.target.value;
+    this.setState({
+      title: newValue
+    });
+  };
 
   render() {
     const card = this.props.card;
-    const labels = card.labels.map(label => <Label color={label} />);
+    const labels = card.labels.map(label => (
+      <Label key={label} color={label} />
+    ));
 
     return (
       <div id="modal-container">
@@ -15,9 +27,15 @@ class CardModal extends Component {
           <i className="x-icon icon close-modal"></i>
           <header>
             <i className="card-icon icon .close-modal"></i>
-            <textarea className="list-title" style={{ height: "45px" }}>
-              {card.title}
-            </textarea>
+            <textarea
+              name="title"
+              onBlur={e => props.onSubmit({ title: e.target.value })}
+              onBlur={this.handleSubmit}
+              onChange={this.handleTitleChange}
+              value={this.state.title}
+              className="list-title"
+              style={{ height: "45px" }}
+            ></textarea>
             <p>
               in list <a className="link">Stuff to try (this is a list)</a>
               <i className="sub-icon sm-icon"></i>
@@ -47,18 +65,11 @@ class CardModal extends Component {
                     </div>
                   </li>
                 </ul>
-                <form className="description">
-                  <p>Description:</p>
-                  <span id="description-edit" className="link">
-                    Edit
-                  </span>
-                  <p className="textarea-overlay">{card.description}</p>
-                  <p id="description-edit-options" className="hidden">
-                    You have unsaved edits on this field.{" "}
-                    <span className="link">View edits</span> -{" "}
-                    <span className="link">Discard</span>
-                  </p>
-                </form>
+                <CardDescriptionContainer
+                  cardId={card.id}
+                  description={card.description}
+                  onSubmit={this.props.onSubmit}
+                />
               </li>
               <li className="comment-section">
                 <h2 className="comment-icon icon">Add Comment</h2>

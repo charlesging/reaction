@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import CardModal from "./CardModal";
+import { fetchCard, updateCard } from "../../actions/cardActions";
 
 const mapStateToProps = (state, ownProps) => {
   const currentCardModal = state.cards.find(card => {
@@ -9,29 +10,34 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     card: currentCardModal
+    // list: (need list title inside card modal)
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const cardId = +ownProps.match.params.id;
   return {
     onFetchCard: () => {
-      dispatch(fetchCard(+ownProps.match.params.id));
+      dispatch(fetchCard(cardId));
+    },
+    onUpdateCard: (data, callback) => {
+      dispatch(updateCard(cardId, data, callback));
     }
   };
 };
 
 class CardModalContainer extends Component {
-  state = {};
-
   componentDidMount() {
     this.props.onFetchCard();
   }
 
   render() {
     if (this.props.card) {
-      return <CardModal card={this.props.card} />;
+      return (
+        <CardModal card={this.props.card} onSubmit={this.props.onUpdateCard} />
+      );
     } else {
-      return <h1>No Card Found</h1>;
+      return null;
     }
   }
 }
