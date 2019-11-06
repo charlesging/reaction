@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Label from "./Label";
+import CardDescriptionContainer from "./CardDescriptionContainer";
 
 class CardModal extends Component {
   state = {
@@ -24,7 +25,9 @@ class CardModal extends Component {
 
   render() {
     const card = this.props.card;
-    const labels = card.labels.map(label => <Label color={label} />);
+    const labels = card.labels.map(label => (
+      <Label key={label} color={label} />
+    ));
 
     return (
       <div id="modal-container">
@@ -70,18 +73,7 @@ class CardModal extends Component {
                     </div>
                   </li>
                 </ul>
-                <form className="description">
-                  <p>Description:</p>
-                  <span id="description-edit" className="link">
-                    Edit
-                  </span>
-                  <p className="textarea-overlay">{card.description}</p>
-                  <p id="description-edit-options" className="hidden">
-                    You have unsaved edits on this field.{" "}
-                    <span className="link">View edits</span> -{" "}
-                    <span className="link">Discard</span>
-                  </p>
-                </form>
+                <CardDescriptionContainer description={card.description} />
               </li>
               <li className="comment-section">
                 <h2 className="comment-icon icon">Add Comment</h2>

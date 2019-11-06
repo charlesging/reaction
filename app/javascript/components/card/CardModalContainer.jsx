@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import CardModal from "./CardModal";
-import BoardContainer from "../board/BoardContainer";
 import { fetchCard, updateCard } from "../../actions/cardActions";
 
 const mapStateToProps = (state, ownProps) => {
