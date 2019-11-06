@@ -35,8 +35,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
   } else {
     return {
       board: stateProps.state.boards.find(board => {
-        // console.log("BOARD : ", board);
-        console.log("BOARD ID : ", board.id === boardId);
         return board.id === boardId;
       }),
       onFetchBoard: () => {
