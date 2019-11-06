@@ -3,20 +3,6 @@ import BoardHeader from "./BoardHeader";
 import ListContainer from "./ListContainer";
 
 class Board extends Component {
-  componentDidMount() {
-    console.log("IN MOUNT");
-    if (this.props.onFetchBoard) {
-      this.props.onFetchBoard();
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.props.onFetchBoard && !this.props.board) {
-      console.log("IN UPDATE ", this.props.board);
-      this.props.onFetchBoard();
-    }
-  }
-
   render() {
     if (this.props.board) {
       return (

@@ -3,24 +3,14 @@ import { connect } from "react-redux";
 import Board from "./Board";
 import { fetchBoard } from "../../actions/BoardActions";
 
-const mapStateToProps = (state, ownProps) => {
-  let currentBoard;
-  // if NOTHING in state, and we're not at /boards/,
-  // board is `null`
-
-  //   currentBoard = state.boards.find(board => {
-  //     return board.id === currentCard.board_id;
-  //   });
-  // } else {
-  // currentBoard = state.boards.find(board => {
-  //   return board.id === +ownProps.match.params.id;
-  // });
-  // }
-
-  // return {
-  //   board: currentBoard
-  // };
+const mapStateToProps = state => {
   return { state };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch: dispatch
+  };
 };
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
@@ -56,17 +46,30 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
   }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    // onFetchBoard: () => {
-    //   dispatch(fetchBoard(+ownProps.match.params.id));
-    // }
-    dispatch: dispatch
+class BoardContainer extends React.Component {
+  state = {
+    requestSent: false
   };
-};
+  componentDidMount() {
+    if (this.props.onFetchBoard) {
+      this.props.onFetchBoard();
+      this.setState({ requestSent: true });
+    }
+  }
+
+  componentDidUpdate() {
+    if (!this.state.requestSent) {
+      this.props.onFetchBoard();
+      this.setState({ requestSent: true });
+    }
+  }
+  render() {
+    return <Board board={this.props.board} />;
+  }
+}
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(Board);
+)(BoardContainer);
