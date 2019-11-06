@@ -47,7 +47,7 @@ export function fetchCard(cardId) {
 export function updateCard(cardId, data, callback) {
   return function(dispatch) {
     dispatch(updateCardRequest());
-    apiClient.updateCard(cardId, { card: data }, updatedCard => {
+    apiClient.updateCard(cardId, data, updatedCard => {
       dispatch(updateCardSuccess(updatedCard));
 
       if (callback) {
@@ -56,3 +56,7 @@ export function updateCard(cardId, data, callback) {
     });
   };
 }
+
+// {
+//   "card": {"title": "My updated title",}
+// }
