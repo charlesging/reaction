@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Label from "./Label";
 import CardDescriptionContainer from "./CardDescriptionContainer";
+import { Link } from "react-router-dom";
 
 class CardModal extends Component {
   state = {
@@ -24,7 +25,9 @@ class CardModal extends Component {
       <div id="modal-container">
         <div className="screen"></div>
         <div id="modal">
-          <i className="x-icon icon close-modal"></i>
+          <Link to={`/boards/${card.board_id}`}>
+            <i className="x-icon icon close-modal"></i>
+          </Link>
           <header>
             <i className="card-icon icon .close-modal"></i>
             <textarea
