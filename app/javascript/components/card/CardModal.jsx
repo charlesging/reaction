@@ -17,6 +17,12 @@ class CardModal extends Component {
     });
   };
 
+  // this is unfinished
+  handleArchive = () => {
+    // (toggle archived state): TODO
+    this.props.onUpdate();
+  };
+
   render() {
     const card = this.props.card;
     const labels = card.labels.map(label => (
@@ -124,7 +130,11 @@ class CardModal extends Component {
               </li>
               <hr />
               <li className="archive-button">
-                <i className="file-icon sm-icon "></i>Archive
+                <i
+                  className="file-icon sm-icon "
+                  onClick={this.handleArchive}
+                ></i>
+                Archive
               </li>
             </ul>
             <ul className="light-list">
