@@ -77,7 +77,7 @@ class CardModal extends Component {
                   onSubmit={this.props.onSubmit}
                 />
               </li>
-              <AddCommentForm />
+              <AddCommentForm onAddComment={this.props.handleCreateComment} />
               <li className="activity-section">
                 <h2 className="activity-icon icon">Activity</h2>
                 <ul className="horiz-list">

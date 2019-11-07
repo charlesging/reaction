@@ -22,6 +22,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     onUpdateCard: (data, callback) => {
       dispatch(updateCard(cardId, data, callback));
+    },
+    handleCreateComment: (data, callback) => {
+      dispatch(createComment(cardId, data, callback));
     }
   };
 };
@@ -34,7 +37,11 @@ class CardModalContainer extends Component {
   render() {
     if (this.props.card) {
       return (
-        <CardModal card={this.props.card} onSubmit={this.props.onUpdateCard} />
+        <CardModal
+          card={this.props.card}
+          onSubmit={this.props.onUpdateCard}
+          onAddComment={this.props.handleCreateComment}
+        />
       );
     } else {
       return null;

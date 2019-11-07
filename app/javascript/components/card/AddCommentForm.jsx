@@ -6,6 +6,11 @@ class AddCommentForm extends Component {
   };
 
   handleTextChange = e => this.setState({ text: e.target.value });
+  handleAdd = () => {
+    this.props.handleCreateComment(this.state.text, () => {
+      this.setState({ text: "" });
+    });
+  };
 
   render() {
     return (
@@ -35,7 +40,8 @@ class AddCommentForm extends Component {
                   type="submit"
                   className="button implemented"
                   value="Save"
-                  disabled={!!this.state.text}
+                  disabled={!this.state.text}
+                  onSubmit={this.handleAdd}
                 />
               </div>
             </label>

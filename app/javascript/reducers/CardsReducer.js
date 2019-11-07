@@ -21,10 +21,12 @@ export default function cardsReducer(state = [], action) {
       return state.concat(action.card);
     case "FETCH_CARD_SUCCESS":
       filteredCards = state.filter(card => {
-        // cards that DONT belong to board
         return card.id !== action.card.id;
       });
-      return filteredCards.concat(action.card);
+
+      const { comments, ...newCardWithoutComments } = action.card;
+      return filteredCards.concat(newCardWithoutComments);
+
     case "UPDATE_CARD_SUCCESS":
       const updatedCards = state.map(card => {
         if (card.id === action.card.id) {
@@ -34,6 +36,7 @@ export default function cardsReducer(state = [], action) {
         }
       });
       return updatedCards;
+
     default:
       return state;
   }
