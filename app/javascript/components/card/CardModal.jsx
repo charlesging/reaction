@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Label from "./Label";
 import CardDescriptionContainer from "./CardDescriptionContainer";
+import { Link } from "react-router-dom";
+import AddCommentFormContainer from "../comments/AddCommentFormContainer";
+import Comment from "../comments/Comment";
 
 class CardModal extends Component {
   state = {
@@ -14,17 +17,30 @@ class CardModal extends Component {
     });
   };
 
+  // this is unfinished
+  handleArchive = () => {
+    // (toggle archived state): TODO
+    this.props.onUpdate();
+  };
+
   render() {
     const card = this.props.card;
     const labels = card.labels.map(label => (
       <Label key={label} color={label} />
     ));
+    const comments = this.props.comments.map(comment => {
+      return <Comment key={comment.id} {...comment} />;
+    });
 
     return (
       <div id="modal-container">
-        <div className="screen"></div>
+        <Link to={`/boards/${card.board_id}`}>
+          <div className="screen"></div>
+        </Link>
         <div id="modal">
-          <i className="x-icon icon close-modal"></i>
+          <Link to={`/boards/${card.board_id}`}>
+            <i className="x-icon icon close-modal"></i>
+          </Link>
           <header>
             <i className="card-icon icon .close-modal"></i>
             <textarea
@@ -71,121 +87,13 @@ class CardModal extends Component {
                   onSubmit={this.props.onSubmit}
                 />
               </li>
-              <li className="comment-section">
-                <h2 className="comment-icon icon">Add Comment</h2>
-                <div>
-                  <div className="member-container">
-                    <div className="card-member">TP</div>
-                  </div>
-                  <div className="comment">
-                    <label>
-                      <textarea
-                        required=""
-                        rows="1"
-                        placeholder="Write a comment..."
-                      ></textarea>
-                      <div>
-                        <a className="light-button card-icon sm-icon"></a>
-                        <a className="light-button smiley-icon sm-icon"></a>
-                        <a className="light-button email-icon sm-icon"></a>
-                        <a className="light-button attachment-icon sm-icon"></a>
-                      </div>
-                      <div>
-                        <input
-                          type="submit"
-                          className="button not-implemented"
-                          value="Save"
-                        />
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </li>
+              <AddCommentFormContainer cardId={card.id} />
               <li className="activity-section">
                 <h2 className="activity-icon icon">Activity</h2>
                 <ul className="horiz-list">
                   <li className="not-implemented">Show Details</li>
                 </ul>
-                <ul className="modal-activity-list">
-                  <li>
-                    <div className="member-container">
-                      <div className="card-member">TP</div>
-                    </div>
-                    <h3>Taylor Peat</h3>
-                    <div className="comment static-comment">
-                      <span>The activities are not functional.</span>
-                    </div>
-                    <small>
-                      22 minutes ago - <span className="link">Edit</span> -{" "}
-                      <span className="link">Delete</span>
-                    </small>
-                    <div className="comment">
-                      <label>
-                        <textarea required="" rows="1">
-                          The activities have not been implemented yet.
-                        </textarea>
-                        <div>
-                          <a className="light-button card-icon sm-icon"></a>
-                          <a className="light-button smiley-icon sm-icon"></a>
-                          <a className="light-button email-icon sm-icon"></a>
-                        </div>
-                        <div>
-                          <p>You havent typed anything!</p>
-                          <input
-                            type="submit"
-                            className="button not-implemented"
-                            value="Save"
-                          />
-                          <i className="x-icon icon"></i>
-                        </div>
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="member-container">
-                      <div className="card-member small-size">VR</div>
-                    </div>
-                    <p>
-                      <span className="member-name">Victor Reyes</span> changed
-                      the background of this board{" "}
-                      <small>yesterday at 4:53 PM</small>
-                    </p>
-                  </li>
-                  <li className="activity-comment">
-                    <div className="member-container">
-                      <div className="card-member">VR</div>
-                    </div>
-                    <h3>Victor Reyes</h3>
-                    <div className="comment static-comment">
-                      <span>Example of a comment.</span>
-                    </div>
-                    <small>
-                      22 minutes ago - <span className="link">Edit</span> -{" "}
-                      <span className="link">Delete</span>
-                    </small>
-                    <div className="comment">
-                      <label>
-                        <textarea required="" rows="1">
-                          Example of a comment.
-                        </textarea>
-                        <div>
-                          <a className="light-button card-icon sm-icon"></a>
-                          <a className="light-button smiley-icon sm-icon"></a>
-                          <a className="light-button email-icon sm-icon"></a>
-                        </div>
-                        <div>
-                          <p>You haven't typed anything!</p>
-                          <input
-                            type="submit"
-                            className="button not-implemented"
-                            value="Save"
-                          />
-                          <i className="x-icon icon"></i>
-                        </div>
-                      </label>
-                    </div>
-                  </li>
-                </ul>
+                <ul className="modal-activity-list">{comments}</ul>
               </li>
             </ul>
           </section>
@@ -222,7 +130,11 @@ class CardModal extends Component {
               </li>
               <hr />
               <li className="archive-button">
-                <i className="file-icon sm-icon "></i>Archive
+                <i
+                  className="file-icon sm-icon "
+                  onClick={this.handleArchive}
+                ></i>
+                Archive
               </li>
             </ul>
             <ul className="light-list">
