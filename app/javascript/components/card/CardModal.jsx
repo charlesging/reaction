@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Label from "./Label";
 import CardDescriptionContainer from "./CardDescriptionContainer";
-import AddCommentForm from "./AddCommentForm";
 import { Link } from "react-router-dom";
+import AddCommentFormContainer from "../comments/AddCommentFormContainer";
 
 class CardModal extends Component {
   state = {
@@ -77,7 +77,7 @@ class CardModal extends Component {
                   onSubmit={this.props.onSubmit}
                 />
               </li>
-              <AddCommentForm onAddComment={this.props.handleCreateComment} />
+              <AddCommentFormContainer cardId={card.id} />
               <li className="activity-section">
                 <h2 className="activity-icon icon">Activity</h2>
                 <ul className="horiz-list">

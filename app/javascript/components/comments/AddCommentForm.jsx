@@ -6,8 +6,8 @@ class AddCommentForm extends Component {
   };
 
   handleTextChange = e => this.setState({ text: e.target.value });
-  handleAdd = () => {
-    this.props.handleCreateComment(this.state.text, () => {
+  handleCreate = () => {
+    this.props.onCreateComment({ text: this.state.text }, () => {
       this.setState({ text: "" });
     });
   };
@@ -41,7 +41,7 @@ class AddCommentForm extends Component {
                   className="button implemented"
                   value="Save"
                   disabled={!this.state.text}
-                  onSubmit={this.handleAdd}
+                  onClick={this.handleCreate}
                 />
               </div>
             </label>
