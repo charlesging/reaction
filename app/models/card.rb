@@ -7,6 +7,6 @@ class Card < ActiveRecord::Base
   end
   
   def attributes
-    super.merge({board_id: board_id})
+    super.merge({board_id: board_id, comments: comments})
   end
 end

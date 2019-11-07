@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Label from "./Label";
 import CardDescriptionContainer from "./CardDescriptionContainer";
+import AddCommentForm from "./AddCommentForm";
 import { Link } from "react-router-dom";
 
 class CardModal extends Component {
@@ -23,7 +24,9 @@ class CardModal extends Component {
 
     return (
       <div id="modal-container">
-        <div className="screen"></div>
+        <Link to={`/boards/${card.board_id}`}>
+          <div className="screen"></div>
+        </Link>
         <div id="modal">
           <Link to={`/boards/${card.board_id}`}>
             <i className="x-icon icon close-modal"></i>
@@ -74,36 +77,7 @@ class CardModal extends Component {
                   onSubmit={this.props.onSubmit}
                 />
               </li>
-              <li className="comment-section">
-                <h2 className="comment-icon icon">Add Comment</h2>
-                <div>
-                  <div className="member-container">
-                    <div className="card-member">TP</div>
-                  </div>
-                  <div className="comment">
-                    <label>
-                      <textarea
-                        required=""
-                        rows="1"
-                        placeholder="Write a comment..."
-                      ></textarea>
-                      <div>
-                        <a className="light-button card-icon sm-icon"></a>
-                        <a className="light-button smiley-icon sm-icon"></a>
-                        <a className="light-button email-icon sm-icon"></a>
-                        <a className="light-button attachment-icon sm-icon"></a>
-                      </div>
-                      <div>
-                        <input
-                          type="submit"
-                          className="button not-implemented"
-                          value="Save"
-                        />
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </li>
+              <AddCommentForm />
               <li className="activity-section">
                 <h2 className="activity-icon icon">Activity</h2>
                 <ul className="horiz-list">
