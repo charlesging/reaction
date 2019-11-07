@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CardModalContainer from "../card/CardModalContainer";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 class Card extends Component {
   render() {

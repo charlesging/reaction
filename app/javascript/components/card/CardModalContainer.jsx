@@ -4,13 +4,22 @@ import CardModal from "./CardModal";
 import { fetchCard, updateCard } from "../../actions/cardActions";
 
 const mapStateToProps = (state, ownProps) => {
+  const cardId = +ownProps.match.params.id;
   const currentCardModal = state.cards.find(card => {
-    return card.id === +ownProps.match.params.id;
+    return card.id === cardId;
+  });
+
+  if (!currentCardModal) {
+    return { card: null };
+  }
+
+  const comments = state.comments.filter(comment => {
+    return comment.card_id === cardId;
   });
 
   return {
-    card: currentCardModal
-    // list: (need list title inside card modal)
+    card: currentCardModal,
+    comments
   };
 };
 
@@ -37,7 +46,7 @@ class CardModalContainer extends Component {
         <CardModal
           card={this.props.card}
           onSubmit={this.props.onUpdateCard}
-          // onAddComment={this.props.handleCreateComment}
+          comments={this.props.comments}
         />
       );
     } else {
