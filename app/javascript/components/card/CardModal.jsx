@@ -17,11 +17,12 @@ class CardModal extends Component {
     });
   };
 
-  // this is unfinished
-  handleToggleArchived = () => {
-    // (toggle archived state): TODO
-    this.props.onUpdate({ archived: !this.props.card.archived }, () => {});
-    // this.props.onUpdate({ archived: false }, () => {});
+  handleArchive = () => {
+    this.props.onUpdate({ archived: true }, () => {});
+  };
+
+  handleUnarchive = () => {
+    this.props.onUpdate({ archived: false }, () => {});
   };
 
   render() {
@@ -134,13 +135,21 @@ class CardModal extends Component {
                 <i className="check-icon sm-icon"></i>
               </li>
               <hr />
-              <li
-                className="archive-button"
-                onClick={this.handleToggleArchived}
-              >
-                <i className="file-icon sm-icon"></i>
-                Archive
-              </li>
+              {card.archived ? (
+                <React.Fragment>
+                  <li class="unarchive-button" onClick={this.handleUnarchive}>
+                    <i class="send-icon sm-icon"></i>Send to board
+                  </li>
+                  <li class="red-button">
+                    <i class="minus-icon sm-icon"></i>Delete
+                  </li>
+                </React.Fragment>
+              ) : (
+                <li className="archive-button" onClick={this.handleArchive}>
+                  <i className="file-icon sm-icon"></i>
+                  Archive
+                </li>
+              )}
             </ul>
             <ul className="light-list">
               <li className="not-implemented">Share and more...</li>

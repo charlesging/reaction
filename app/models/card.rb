@@ -1,6 +1,7 @@
 class Card < ActiveRecord::Base
   belongs_to :list
   has_many :comments
+  has_many :actions
   
   def board_id
     list.board_id

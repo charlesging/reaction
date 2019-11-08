@@ -19,17 +19,22 @@ class Api::CardsController < ApplicationController
 
   def update
     @card = Card.find(params[:id])
-    
-    if @card.update(card_params)
-      render :update, status: 200
-    else
-      @error = card.errors.full_messages.join(', ')
-      render 'api/shared/error', status: 422
+    @card.assign_attributes(card_params)
+
+    ActiveRecord::Base.transaction do
+      create_actions(@card) if @card.valid?
+
+      if @card.save
+        render :update, status: 200
+      else
+        @error = card.errors.full_messages.join(', ')
+        render 'api/shared/error', status: 422
+      end
     end
 
-  rescue ActiveRecord::RecordNotFound
-    @error = "Invalid card id provided."
-    render 'api/shared/error', status: 404
+    rescue ActiveRecord::RecordNotFound
+      @error = "Invalid card id provided."
+      render 'api/shared/error', status: 404
 
   end
 
@@ -42,6 +47,18 @@ class Api::CardsController < ApplicationController
   end
 
   private 
+
+  def create_actions(card)
+    if card.archived_changed?
+      if card.archived?
+        card.actions.create!(description: " archived this card.")
+      else
+        card.actions.create!(description: " sent the card to the board.")
+      end
+    else
+
+    end
+  end
 
   def card_params
     params.require(:card).permit(:title, :list_id, :position, :description, :archived, :due_date, :completed, :labels)
