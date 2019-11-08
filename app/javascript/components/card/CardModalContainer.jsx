@@ -47,6 +47,7 @@ class CardModalContainer extends Component {
           card={this.props.card}
           onSubmit={this.props.onUpdateCard}
           comments={this.props.comments}
+          onUpdate={this.props.onUpdateCard}
         />
       );
     } else {

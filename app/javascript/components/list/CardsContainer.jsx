@@ -5,7 +5,7 @@ import Card from "./Card";
 const mapStateToProps = (state, ownProps) => {
   return {
     cards: state.cards.filter(card => {
-      return card.list_id === ownProps.list.id;
+      return card.list_id === ownProps.list.id && !card.archived;
     })
   };
 };

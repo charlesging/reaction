@@ -18,9 +18,10 @@ class CardModal extends Component {
   };
 
   // this is unfinished
-  handleArchive = () => {
+  handleToggleArchived = () => {
     // (toggle archived state): TODO
-    this.props.onUpdate();
+    this.props.onUpdate({ archived: !this.props.card.archived }, () => {});
+    // this.props.onUpdate({ archived: false }, () => {});
   };
 
   render() {
@@ -41,12 +42,16 @@ class CardModal extends Component {
           <Link to={`/boards/${card.board_id}`}>
             <i className="x-icon icon close-modal"></i>
           </Link>
+          {card.archived ? (
+            <div class="archived-banner">
+              <i class="file-icon icon"></i>This card is archived.
+            </div>
+          ) : null}
           <header>
             <i className="card-icon icon .close-modal"></i>
             <textarea
               name="title"
-              onBlur={e => props.onSubmit({ title: e.target.value })}
-              onBlur={this.handleSubmit}
+              onBlur={e => this.props.onSubmit({ title: e.target.value })}
               onChange={this.handleTitleChange}
               value={this.state.title}
               className="list-title"
@@ -129,11 +134,11 @@ class CardModal extends Component {
                 <i className="check-icon sm-icon"></i>
               </li>
               <hr />
-              <li className="archive-button">
-                <i
-                  className="file-icon sm-icon "
-                  onClick={this.handleArchive}
-                ></i>
+              <li
+                className="archive-button"
+                onClick={this.handleToggleArchived}
+              >
+                <i className="file-icon sm-icon"></i>
                 Archive
               </li>
             </ul>
