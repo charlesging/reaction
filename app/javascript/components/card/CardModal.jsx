@@ -4,6 +4,7 @@ import CardDescriptionContainer from "./CardDescriptionContainer";
 import { Link } from "react-router-dom";
 import AddCommentFormContainer from "../comments/AddCommentFormContainer";
 import Comment from "../comments/Comment";
+import Action from "../comments/Action";
 
 class CardModal extends Component {
   state = {
@@ -30,8 +31,11 @@ class CardModal extends Component {
     const labels = card.labels.map(label => (
       <Label key={label} color={label} />
     ));
-    const comments = this.props.comments.map(comment => {
-      return <Comment key={comment.id} {...comment} />;
+    // console.log(this.props.commentsAndActions);
+    const comments = this.props.commentsAndActions.map(comment => {
+      if (comment.isAction) {
+        return <Action key={comment.id} {...comment} />;
+      } else return <Comment key={comment.id} {...comment} />;
     });
 
     return (

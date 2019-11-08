@@ -24,9 +24,12 @@ export default function cardsReducer(state = [], action) {
         return card.id !== action.card.id;
       });
 
-      const { comments, ...newCardWithoutComments } = action.card;
-      return filteredCards.concat(newCardWithoutComments);
-
+      const {
+        comments,
+        actions,
+        ...newCardWithoutCommentsOrActions
+      } = action.card;
+      return filteredCards.concat(newCardWithoutCommentsOrActions);
     case "UPDATE_CARD_SUCCESS":
       const updatedCards = state.map(card => {
         if (card.id === action.card.id) {

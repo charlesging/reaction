@@ -17,9 +17,17 @@ const mapStateToProps = (state, ownProps) => {
     return comment.card_id === cardId;
   });
 
+  const actions = state.actions
+    .filter(action => {
+      return action.card_id === cardId;
+    })
+    .map(action => ({ ...action, isAction: true }));
+
+  const commentsAndActions = [...comments, ...actions];
+
   return {
     card: currentCardModal,
-    comments
+    commentsAndActions: commentsAndActions
   };
 };
 
@@ -46,7 +54,7 @@ class CardModalContainer extends Component {
         <CardModal
           card={this.props.card}
           onSubmit={this.props.onUpdateCard}
-          comments={this.props.comments}
+          commentsAndActions={this.props.commentsAndActions}
           onUpdate={this.props.onUpdateCard}
         />
       );
