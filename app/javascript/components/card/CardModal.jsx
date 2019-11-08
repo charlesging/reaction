@@ -4,11 +4,12 @@ import CardDescriptionContainer from "./CardDescriptionContainer";
 import { Link } from "react-router-dom";
 import AddCommentFormContainer from "../comments/AddCommentFormContainer";
 import Comment from "../comments/Comment";
-import Action from "../comments/Action";
+import DueDateForm from "./DueDateForm";
 
 class CardModal extends Component {
   state = {
-    title: this.props.card.title
+    title: this.props.card.title,
+    dueDateFormVisible: false
   };
 
   handleTitleChange = e => {
@@ -26,15 +27,24 @@ class CardModal extends Component {
     this.props.onUpdate({ archived: false }, () => {});
   };
 
+  handleDueDateClick = () => {
+    this.setState(prevState => {
+      return {
+        dueDateFormVisible: !prevState.dueDateFormVisible
+      };
+    });
+  };
+
   render() {
     const card = this.props.card;
     const labels = card.labels.map(label => (
       <Label key={label} color={label} />
     ));
-    // console.log(this.props.commentsAndActions);
+
     const sortedComments = this.props.commentsAndActions.sort((a, b) => {
       return new Date(b.created_at) - new Date(a.created_at);
     });
+
     const comments = sortedComments.map(comment => {
       return (
         <Comment key={comment.id} {...comment} isAction={comment.isAction} />
@@ -83,7 +93,11 @@ class CardModal extends Component {
                   </li>
                   <li className="due-date-section">
                     <h3>Due Date</h3>
-                    <div id="dueDateDisplay" className="overdue completed">
+                    <div
+                      id="dueDateDisplay"
+                      className="overdue completed"
+                      onClick={this.handleDueDateClick}
+                    >
                       <input
                         id="dueDateCheckbox"
                         type="checkbox"
@@ -92,6 +106,7 @@ class CardModal extends Component {
                       />
                       {card.due_date} <span>(past due)</span>
                     </div>
+                    {this.state.dueDateFormVisible ? <DueDateForm /> : null}
                   </li>
                 </ul>
                 <CardDescriptionContainer
