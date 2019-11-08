@@ -32,10 +32,13 @@ class CardModal extends Component {
       <Label key={label} color={label} />
     ));
     // console.log(this.props.commentsAndActions);
-    const comments = this.props.commentsAndActions.map(comment => {
-      if (comment.isAction) {
-        return <Action key={comment.id} {...comment} />;
-      } else return <Comment key={comment.id} {...comment} />;
+    const sortedComments = this.props.commentsAndActions.sort((a, b) => {
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
+    const comments = sortedComments.map(comment => {
+      return (
+        <Comment key={comment.id} {...comment} isAction={comment.isAction} />
+      );
     });
 
     return (
